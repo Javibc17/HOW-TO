@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>HOW-TO</title>
+</head>
+<body>
+    <header>
+        <h1><span class="titulo">HOW TO</span>Compartir Archivos Con Samba</h1>
+    </header>
+    <nav>
+        <div class="nav">
+            <a href="#Instalacion">INSTALACIÓN</a>
+            <a href="#linux">LINUX</a>
+            <a href="#windows ">WINDOWS</a>
+            <a href="#ejecutar">EJECUTAR</a>
+        </div>
+    </nav>
+    <main>
+        <article id="Instalacion" class="iso">
+            <section>
+                <div class="ancho">
+                    <h2>1. Instalación de las ISOS</h2>
+                    
+                    <p>El primer paso es instalar las ISOS de Linux y de windows.</p>               
+                    <p>Una vez instalados crearemos dos maquinas virtuales de Linux y de Windows y configuraremos las <b>REDES NAT</b> de cada uno.</p>
+                </div> 
+                <img src="recursos/isos.png" alt="isos">
+            </section>
+            <section>
+                <div class="ancho">
+                    <h2>1.1 Configuración de la RED NAT</h2>
+
+                    <p>Entramos en las herramientas de la maquina virtual, seleccionamos el apartado de Redes NAT, creamos un nombre y lo aplicamos.</p>
+                </div>
+                <img src="recursos/herramientarednat.png " alt="Configuracion">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <p>Entramos en la Configuración de windows y linux, seleccionamos el apartado de red, la conectamos a la Red NAT y seleccionamos la red que hemos creado.</p>
+                    <p>Lo tenemos que hacer en ambas maquinas para enlazarlasb.</p>
+                </div>
+                <img src="recursos/red nat.png " alt="Configuracion">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <h2 id="linux">2. LINUX</h2>
+
+                    <p>Entramos en la maquina virtual de Linux e instalamos una terminal.</p>
+                    <p>(En mi caso he instalado Terminator).</p>
+                </div>
+                <img src="recursos/terminator.png " alt="terminal">
+            </section>
+                
+            <section>
+                <div class="ancho">
+                    <h2>2.1 Actualizamos los sistemas</h2>
+
+                    <p>Para poder utilizar correctamente estos sistemas debemos de actualizarlos, para ello utilizaremos los siguientes comandos:</p>
+                    <p>su ->  (Para entrar en el administrador).</p>
+                    <p>apt upgrade -> (Para instalar las actualizaciones)</p>
+                    <p>apt update -> (Para actualizar las actualizaciones instaladas anteriormente)</p>
+                </div>
+                <img src="recursos/su apt.png " alt="Actualizaciones">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <h2>2.2 Instalamos Samba</h2>
+
+                    <p>Samba es un conjunto de programas que trabajan juntos para permitir a los clientes acceder a espacios de archivos del servidor e impresoras mediante los protocolos SMB (Server Message Block).</p>
+                    <p>Para instalarlo utilizaremos el siguiente comando:</p>
+                    <p>apt install samba -> </p>
+                </div>
+                <img src="recursos/installsamba.png " alt="Samba">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <h2>2.3 Creamos un usuario</h2>
+
+                    <p>Creamos un nuevo usuario para compartir los documentos.</p>
+                    <p>Adduser winuser -></p>
+                    <p>Creamos una contraseña y avanzamos los siguientes pasos dandole al enter. (Sin poner ningun dato)</p>
+                </div>
+                <img src="recursos/winuser.png " alt="Configuracion" width="512px">
+                <img src="recursos/contraseña user.png" alt="contraseña">
+                <p>Le damos a "Y" para continuar</p>
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <h2>2.4 Creamos una carpeta</h2>
+
+                    <p>Primero nos logamos con el usuario creado anteriormente poniendo la contraseña que hayamos elegido, y seguimos los siguientes pasos:</p>
+                    <p>su winuser -></p>
+                    <p>cd .. -> (Para salir de la carpeta en la que estemos).</p>
+                    <p>cd winuser -> (Para entrar en nuestra carpeta).</p>
+                    <p>mkdir compartida -> (Para crear una carpeta llamada compartida).</p>
+                    <p>chmod 777 compartida/ -> (Para darle todos los permisos)</p>
+                </div>
+                <img src="recursos/carpeta.png " alt="crear carpeta" >
+                <img src="recursos/chmod.png" alt="permisos carpeta" width="332px">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <h2>2.5 Instalamos Vim</h2>
+
+                    <p>Vim es un editor de texto de código abierto, libre y multiplataforma, disponible en la mayoría de sistemas tipo Unix. </p>
+                    <p>Para instalarlo tenemos que entrar como administrador utilizando "su" y ponemos el siguiente codigo:</p>
+                    <p>Apt-get install vim -></p>
+                </div>
+                <img src="recursos/vim.png " alt="vim">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <h2>2.6 Editamos el archivo con Vim</h2>
+
+                    <p>Vim /etc/samba/smb.conf -> </p>
+                    <p>Podemos utilizar nano si no nos funciona vim:</p>
+                    <p>Nano /etc/samba/smb.conf -></p>
+                </div>
+                <img src="recursos/vim.conf.png " alt="vim config">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <p>Dentro de Vim nos dirigimos al final de la pagina y le damos a la tecla insert (Ins) y escribimos lo siguiente: </p>
+                    
+                    [Compartida]
+                    <ul>
+                        <li>path = /home/winuser/compartida</li>
+                        <li>browseable = yes</li>
+                        <li>read only = no</li>
+                        <li>valid users = winuser</li>
+                    </ul>
+                </div>
+                <img src="recursos/config vim.png " alt="vim config">
+                <p>Salimos de vim dandole al escape y escribiendo:</p>
+                <p>:wq -> (write, quit)</p>
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <h2>2.7 Creamos usuario</h2>
+
+                    <p>Primero añadimos a winuser a los usuarios de samba y le ponemos una contraseña</p>
+                    <p>smbpasswd -a winuser -> (Puede coincidir con la contraseña antigua)</p>
+                </div>
+                <img src="recursos/contrausuario.png " alt="contraseñausuario">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <p>Ahora nos cambiamos al usuario winuser para crear un archivo dentro de la carpeta "compartida". Utilizaremos los siguiente comandos:</p>
+                    <p>su winuser -> </p>
+                    <p>cd .. -></p>
+                    <p>cd winuser/compartida/ -> (Para entrar en la carpeta)</p>
+                    <p>touch archivo-linux -> (Para crear el archivo)</p>
+                </div>
+                <img src="recursos/archivolinux.png " alt="archivolinux">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <h2>2.8 Reseteo servicio samba</h2>
+
+                    <p>su -> Y ponemos la contraseña</p>
+                    <p>systemctl restart smbd.service -> (Si no funciona porque no estaba en ejecucion utilizaremos : reload-or-restart)</p>
+                </div>
+                <img src="recursos/reseteo.png " alt="reseteo">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <p>Por ultimo miramos la direccion ip de la maquina y la anotamos.</p>
+                    <p>ip a -></p>
+                    <p>En mi caso es 10.0.2.15</p>
+                </div>
+                <img src="recursos/ip a.png " alt="ip">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <h2 id="windows">3. WINDOWS</h2>
+
+                    <p>En Windows tenemos que habilitar el uso compartido de archivos y carpetas.</p>
+                    <p>Entramos en la Configuración avanzada del firewall y habilitamos todas las reglas de "Archivos e impresoras compartidos".</p>
+                </div>
+                <img src="recursos/firewall.png " alt="firewall">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <p>Entramos en la Configuracion avanzada.</p>
+                </div>
+                <img src="recursos/confiavanzada.png " alt="firewall" >
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <p>Dentro de la configuracion avanzada le damos a Reglas de Entrada.</p>
+                    <p> Seleccionamos las reglas de Archivos e impresoras compartidos</p>
+                </div>
+                <img src="recursos/activacion.png " alt="firewall" >
+            </section>
+            <section>
+                <div class="ancho">
+                    <h2>3.1 Comprobacion de Ping</h2>
+
+                    <p>Con la IP que anotamos anteriormente en Linux la ponemos en windows con el siguiente comando.</p>
+                    <p>ping 10.0.2.15 -> (En cada caso la ip que nos den).</p>
+                </div>
+                <img src="recursos/ping.png " alt="firewall">
+            </section>
+
+            <section>
+                <div class="ancho">
+                    <h2 id="ejecutar">4. Ejecutar</h2>
+
+                    <p>Despues de comprobar si tenemos ping abrimos ejecutar ya desde nuestro dispositivo y escribimos:.</p>
+                    <p>\\iplinux\compartida -> (En iplinux ponemos la ip obtenida anteriormente)</p>
+                </div>
+                <img src="recursos/ejecutar.png " alt="firewall">
+            </section>
+
+            <section class="ultimo">
+                <div class="ancho">
+                    <p>Entraremos en la carpeta compartida y comprobamos si podemos crear archivos, entrar en ellos, etc.</p>
+                    
+                </div>
+                <img src="recursos/ultimo.png " alt="firewall">
+            </section>
+        </article> 
+            
+
+
+    </main>
+</body>
+</html>
