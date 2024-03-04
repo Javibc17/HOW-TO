@@ -42,7 +42,7 @@ nav{
 }
 
 
-a{
+.inicio{
     text-decoration: none;
     font-size: 18px;
     
@@ -110,4 +110,50 @@ p{
 
 .ultimo{
     margin-bottom: 70px;
+}
+
+footer{
+    background-color:  rgb(87, 139, 139);;
+    height: 70px;
+
+    display: flex;
+    flex-direction: row;
+
+    border-top: solid;
+    border-bottom: solid;  
+}
+.foot{
+    width: 50%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pie{
+    color: white;
+    font-size:30px;
+    margin: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.foot2{
+    width: 50%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pie2{
+    color: white;
+    font-size:25px;
+    margin: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
